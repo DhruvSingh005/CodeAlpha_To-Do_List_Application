@@ -1,0 +1,111 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+struct Task {
+    string task_name;
+    bool isCompleted;
+
+    Task(string desc) {
+        task_name = desc;
+        isCompleted = false;
+    }
+};
+
+class ToDoList {
+private:
+    vector<Task> task;
+
+public:
+    void addTask(string task_name) {
+        task.push_back(Task(task_name));
+        cout << "Task added: " << task_name << endl;
+        cout << endl;
+            cout << "---------------------------------------------------------------";
+            cout << endl;
+    }
+
+    void completeTask(int index) {
+        if (index >= 0 && index < task.size()) {
+            task[index].isCompleted = true;
+            cout << "Task marked as completed: " << task[index].task_name << endl;
+            cout << endl;
+            cout << "---------------------------------------------------------------";
+            cout << endl;
+        } else {
+            cout << "Invalid task number!" << endl;
+            cout << endl;
+            cout << "---------------------------------------------------------------";
+            cout << endl;
+        }
+    }
+
+    void viewTasks() {
+        if (task.empty()) {
+            cout << "No tasks available." << endl;
+            return;
+            cout << endl;
+            cout << "---------------------------------------------------------------";
+            cout << endl;
+        }
+
+        for (int i = 0; i < task.size(); i++) {
+            cout << i + 1 << ". " << task[i].task_name
+                 << (task[i].isCompleted ? " [Completed]" : " [Pending]") << endl;
+        }
+        cout << endl;
+        cout << "---------------------------------------------------------------";
+        cout << endl;
+    }
+};
+
+int main() {
+    ToDoList myList;
+    int choice;
+    string task_name;
+    int taskNumber;
+
+    do {
+        cout << "\nTo-Do List Application\n";
+        cout << "---------------------------------------------------------------\n";
+        cout << "1. Add Task\n";
+        cout << "2. Mark Task as Completed\n";
+        cout << "3. View Tasks\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore(); // To handle newline character after entering the choice
+
+        switch (choice) {
+            case 1:
+                cout << "Enter task name: ";
+                getline(cin, task_name);
+                cout << endl;
+                myList.addTask(task_name);
+                break;
+            case 2:
+                cout << "Enter task number to mark it as completed: ";
+                cin >> taskNumber;
+                cout << endl;
+                myList.completeTask(taskNumber - 1);
+                break;
+            case 3:
+                myList.viewTasks();
+                break;
+            case 4:
+                cout << "Exiting the To-Do List Application." << endl;
+                cout << endl;
+                cout << "---------------------------------------------------------------\n";;
+                cout << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please Enter correct choice." << endl;
+                cout << endl;
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
